@@ -46,6 +46,7 @@ int main() {
 			file << books[i].is_available << '\n';
 			file << books[i].Code << '\n';
 			file << books[i].Category << '\n';
+			file.close();
 		}
 	}
 
