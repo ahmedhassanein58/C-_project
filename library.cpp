@@ -21,7 +21,7 @@ int main() {
 	int num;
 	const int NUMBER_OF_BOOKS = 100;
 	fstream file("repo.txt", ios::out);
-
+	
 	book books[NUMBER_OF_BOOKS];
 	cout << "Enter the number of books: ";
 	cin >> num;
@@ -46,6 +46,7 @@ int main() {
 			file << books[i].is_available << '\n';
 			file << books[i].Code << '\n';
 			file << books[i].Category << '\n';
+			file.close();
 		}
 	}
 
