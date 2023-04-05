@@ -4,7 +4,8 @@
 
 using namespace std;
 
-struct book {
+struct book
+{
 	int Code, Edition;
 	string Name;
 	string Author_name;
@@ -12,43 +13,69 @@ struct book {
 	char is_available;
 };
 
-struct student {
+struct student
+{
 	int ID;
-	string Name, borrowed_book;
+	string Name, borrowed_book[100];
 };
 
-int main() {
-	int num;
-	const int NUMBER_OF_BOOKS = 100;
-	fstream file("repo.txt", ios::out);
-	
-	book books[NUMBER_OF_BOOKS];
-	cout << "Enter the number of books: ";
-	cin >> num;
-	for (int i = 1; i <= num; i++) {
-		cout << "Enter the information of Book number #" << i << endl;
+const int MAX_SIZE = 1000;
+student students[MAX_SIZE];
+book books[MAX_SIZE];
+
+void save_data(int n);
+void read_data();
+
+void main() {
+	int nbooks;
+
+	cout << "Enter number of books:	";
+
+	cin >> nbooks;
+	cin.ignore();
+
+	for (int i = 0; i < nbooks; i++) {
+
 		cout << "Enter book name: ";
-		cin >> books[i].Name;
-		cout << "Enter author name : ";
-		cin >> books[i].Author_name;
-		cout << "Enter edition number: ";
+		getline(cin, books[i].Name);
+
+		cout << "Enter book Author's name: ";
+		getline(cin, books[i].Author_name);
+
+		cout << "Enter book Category: ";
+		getline(cin, books[i].Category);
+
+		cout << "Enter book edition: ";
 		cin >> books[i].Edition;
-		cout << "Availability: ";
-		cin >> books[i].is_available;
+		cin.ignore();
+
 		cout << "Enter book code: ";
 		cin >> books[i].Code;
-		cout << "Enter book category: ";
-		cin >> books[i].Category;
-		if (file.is_open()) {
-			file << books[i].Name << '\n';
-			file << books[i].Author_name << '\n';
-			file << books[i].Edition << '\n';
-			file << books[i].is_available << '\n';
-			file << books[i].Code << '\n';
-			file << books[i].Category << '\n';
-			file.close();
-		}
+		cin.ignore();
+
+		cout << "Is book available: ";
+		cin >> books[i].is_available;
+		cin.ignore();
 	}
 
-	return 0;
+	save_data(nbooks);
+
+}
+
+void save_data(int n) {
+	fstream file;
+	file.open("repo.txt", ios::out);
+
+	if (file.is_open()) {
+		for (int i = 0; i < n; i++) {
+			file << books[i].Name << endl;
+			file << books[i].Author_name << endl;
+			file << books[i].Category << endl;
+			file << books[i].Edition << endl;
+			file << books[i].Code << endl;
+			file << books[i].is_available << endl;
+		}
+		file.close();
+	}
+
 }
